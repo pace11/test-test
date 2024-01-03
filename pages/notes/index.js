@@ -1,3 +1,4 @@
+import { useMutation } from "@/hooks/useMutation";
 import {
   Box,
   Button,
@@ -12,47 +13,42 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import Axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 const LayoutComponent = dynamic(() => import("@/layout"));
 
 export default function Notes() {
   const router = useRouter();
-  const [notes, setNotes] = useState();
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState(false);
+  // const {
+  //   data: listNotes,
+  //   isLoading,
+  //   isError,
+  // } = useQueries({
+  //   prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
+  // });
+  const { mutate } = useMutation();
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const {
+    data: listNotes,
+    error: isError,
+    isLoading,
+  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/notes`, fetcher, {
+    // revalidateOnFocus: true,
+    refreshInterval: 3,
+  });
 
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/notes/delete/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const result = await response.json();
-      if (result?.success) {
-        router.reload();
-      }
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    async function fetchingData() {
-      try {
-        const response = await Axios.get("https://simpeg-be.vercel.app/api/v2/notes");
-        setNotes(response?.data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(true);
-      }
+    const response = await mutate({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/notes/delete/${id}`,
+      method: "DELETE",
+    });
+    if (response?.success) {
+      router.reload();
     }
-    fetchingData();
-  }, []);
+  };
 
   return (
     <>
@@ -71,7 +67,7 @@ export default function Notes() {
               <Spinner />
             ) : (
               <Grid templateColumns="repeat(3, 1fr)" gap={5}>
-                {notes?.data?.map((item) => (
+                {listNotes?.data?.map((item) => (
                   <GridItem key={item.id}>
                     <Card>
                       <CardHeader>

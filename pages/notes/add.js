@@ -1,3 +1,4 @@
+import { useMutation } from "@/hooks/useMutation";
 import {
   Button,
   Card,
@@ -20,22 +21,15 @@ export default function AddNotes() {
     title: "",
     description: "",
   });
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const { mutate, isLoading } = useMutation();
 
   const HandleSubmit = async () => {
-    setSubmitLoading(true);
-    try {
-      const response = await fetch("http://localhost:3000/api/notes/add", {
-        method: "POST",
-        body: JSON.stringify(notes),
-      });
-      const result = await response.json();
-      if (result?.success) {
-        setSubmitLoading(false);
-        router.push("/notes");
-      }
-    } catch (error) {
-      setSubmitLoading(false);
+    const response = await mutate({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
+      payload: notes,
+    });
+    if (response?.success) {
+      router.push("/notes");
     }
   };
 
@@ -63,7 +57,11 @@ export default function AddNotes() {
               />
             </GridItem>
             <GridItem>
-              <Button isLoading={submitLoading} onClick={() => HandleSubmit()} colorScheme="blue">
+              <Button
+                isLoading={isLoading}
+                onClick={() => HandleSubmit()}
+                colorScheme="blue"
+              >
                 Submit
               </Button>
             </GridItem>
