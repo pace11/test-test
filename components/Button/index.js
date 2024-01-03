@@ -1,5 +1,5 @@
-const Button = () => {
-  return <button>click me</button>;
-};
+function Button() {
+  return <button type="button">click me</button>;
+}
 
 export default Button;

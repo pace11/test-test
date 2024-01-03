@@ -1,7 +1,8 @@
+/* eslint-disable import/order */
 import Layout from "@/layout";
 import { useRouter } from "next/router";
 
-const Profile = () => {
+function Profile() {
   const router = useRouter();
   const user = {
     1: {
@@ -22,9 +23,11 @@ const Profile = () => {
         <p>{router.asPath}</p>
         <h3>ini halaman profile dari : {JSON.stringify(userDetail)}</h3>
       </div>
-      <button onClick={() => router.back()}>Kembali</button>
+      <button type="button" onClick={() => router.back()}>
+        Kembali
+      </button>
     </Layout>
   );
-};
+}
 
 export default Profile;

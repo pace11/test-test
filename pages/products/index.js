@@ -1,14 +1,16 @@
 import Layout from "@/layout";
 
-export default function Products({ products}) {
-  return <Layout>
-    {products?.products?.map((item) => (
+export default function Products({ products }) {
+  return (
+    <Layout>
+      {products?.products?.map((item) => (
         <div style={{ border: "1px solid black", marginBottom: "10px" }}>
-            <h5>{item.title}</h5>
-            <p>{item.description}</p>
+          <h5>{item.title}</h5>
+          <p>{item.description}</p>
         </div>
-    ))}
-  </Layout>;
+      ))}
+    </Layout>
+  );
 }
 
 export async function getServerSideProps() {

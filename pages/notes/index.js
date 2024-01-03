@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/order
 import { useMutation } from "@/hooks/useMutation";
 import {
   Box,
@@ -51,61 +52,56 @@ export default function Notes() {
   };
 
   return (
-    <>
-      <LayoutComponent metaTitle="Notes">
-        <Box padding="5">
-          <Flex justifyContent="end">
-            <Button
-              colorScheme="blue"
-              onClick={() => router.push("/notes/add")}
-            >
-              Add Notes
+    <LayoutComponent metaTitle="Notes">
+      <Box padding="5">
+        <Flex justifyContent="end">
+          <Button colorScheme="blue" onClick={() => router.push("/notes/add")}>
+            Add Notes
+          </Button>
+        </Flex>
+        <Flex>
+          {isLoading && !isError ? (
+            <Spinner />
+          ) : (
+            <Grid templateColumns="repeat(3, 1fr)" gap={5}>
+              {listNotes?.data?.map((item) => (
+                <GridItem key={item.id}>
+                  <Card>
+                    <CardHeader>
+                      <Heading>{item?.title}</Heading>
+                    </CardHeader>
+                    <CardBody>
+                      <Text>{item?.description}</Text>
+                    </CardBody>
+                    <CardFooter justify="space-between" flexWrap="wrap">
+                      <Button
+                        onClick={() => router.push(`/notes/edit/${item?.id}`)}
+                        flex="1"
+                        variant="ghost"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        flex="1"
+                        colorScheme="red"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </GridItem>
+              ))}
+            </Grid>
+          )}
+          {isError && (
+            <Button onClick={() => window.location.reload()}>
+              Refresh Page
             </Button>
-          </Flex>
-          <Flex>
-            {isLoading && !isError ? (
-              <Spinner />
-            ) : (
-              <Grid templateColumns="repeat(3, 1fr)" gap={5}>
-                {listNotes?.data?.map((item) => (
-                  <GridItem key={item.id}>
-                    <Card>
-                      <CardHeader>
-                        <Heading>{item?.title}</Heading>
-                      </CardHeader>
-                      <CardBody>
-                        <Text>{item?.description}</Text>
-                      </CardBody>
-                      <CardFooter justify="space-between" flexWrap="wrap">
-                        <Button
-                          onClick={() => router.push(`/notes/edit/${item?.id}`)}
-                          flex="1"
-                          variant="ghost"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          flex="1"
-                          colorScheme="red"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          Delete
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  </GridItem>
-                ))}
-              </Grid>
-            )}
-            {isError && (
-              <Button onClick={() => window.location.reload()}>
-                Refresh Page
-              </Button>
-            )}
-          </Flex>
-        </Box>
-      </LayoutComponent>
-    </>
+          )}
+        </Flex>
+      </Box>
+    </LayoutComponent>
   );
 }
 

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 export default async function handler(req, res) {
-  if (req.method)
+  if (req.method) {
     try {
       const response = await fetch(
         `https://dummyjson.com/products/${req.query.id}`
@@ -11,4 +11,5 @@ export default async function handler(req, res) {
     } catch (error) {
       res.status(500).json({});
     }
+  }
 }

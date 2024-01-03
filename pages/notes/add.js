@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+// eslint-disable-next-line import/order
 import { useMutation } from "@/hooks/useMutation";
 import {
   Button,
@@ -34,40 +36,38 @@ export default function AddNotes() {
   };
 
   return (
-    <>
-      <LayoutComponent metaTitle="Notes">
-        <Card margin="5" padding="5">
-          <Heading>Add Notes</Heading>
-          <Grid gap="5">
-            <GridItem>
-              <Text>Title</Text>
-              <Input
-                type="text"
-                onChange={(event) =>
-                  setNotes({ ...notes, title: event.target.value })
-                }
-              />
-            </GridItem>
-            <GridItem>
-              <Text>Description</Text>
-              <Textarea
-                onChange={(event) =>
-                  setNotes({ ...notes, description: event.target.value })
-                }
-              />
-            </GridItem>
-            <GridItem>
-              <Button
-                isLoading={isLoading}
-                onClick={() => HandleSubmit()}
-                colorScheme="blue"
-              >
-                Submit
-              </Button>
-            </GridItem>
-          </Grid>
-        </Card>
-      </LayoutComponent>
-    </>
+    <LayoutComponent metaTitle="Notes">
+      <Card margin="5" padding="5">
+        <Heading>Add Notes</Heading>
+        <Grid gap="5">
+          <GridItem>
+            <Text>Title</Text>
+            <Input
+              type="text"
+              onChange={(event) =>
+                setNotes({ ...notes, title: event.target.value })
+              }
+            />
+          </GridItem>
+          <GridItem>
+            <Text>Description</Text>
+            <Textarea
+              onChange={(event) =>
+                setNotes({ ...notes, description: event.target.value })
+              }
+            />
+          </GridItem>
+          <GridItem>
+            <Button
+              isLoading={isLoading}
+              onClick={() => HandleSubmit()}
+              colorScheme="blue"
+            >
+              Submit
+            </Button>
+          </GridItem>
+        </Grid>
+      </Card>
+    </LayoutComponent>
   );
 }

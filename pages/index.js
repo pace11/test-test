@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import Button from "@/components/Button";
 import Layout from "@/layout";
 import styles from "@/styles/Home.module.css";

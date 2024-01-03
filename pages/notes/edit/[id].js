@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import {
   Button,
   Card,
@@ -65,46 +66,44 @@ export default function AddNotes() {
   }, [id]);
 
   return (
-    <>
-      <LayoutComponent metaTitle="Notes">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <Card margin="5" padding="5">
-            <Heading>Edit Notes</Heading>
-            <Grid gap="5">
-              <GridItem>
-                <Text>Title</Text>
-                <Input
-                  value={notes.title}
-                  type="text"
-                  onChange={(event) =>
-                    setNotes({ ...notes, title: event.target.value })
-                  }
-                />
-              </GridItem>
-              <GridItem>
-                <Text>Description</Text>
-                <Textarea
-                  value={notes.description}
-                  onChange={(event) =>
-                    setNotes({ ...notes, description: event.target.value })
-                  }
-                />
-              </GridItem>
-              <GridItem>
-                <Button
-                  isLoading={submitLoading}
-                  onClick={() => HandleSubmit()}
-                  colorScheme="blue"
-                >
-                  Submit
-                </Button>
-              </GridItem>
-            </Grid>
-          </Card>
-        )}
-      </LayoutComponent>
-    </>
+    <LayoutComponent metaTitle="Notes">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Card margin="5" padding="5">
+          <Heading>Edit Notes</Heading>
+          <Grid gap="5">
+            <GridItem>
+              <Text>Title</Text>
+              <Input
+                value={notes.title}
+                type="text"
+                onChange={(event) =>
+                  setNotes({ ...notes, title: event.target.value })
+                }
+              />
+            </GridItem>
+            <GridItem>
+              <Text>Description</Text>
+              <Textarea
+                value={notes.description}
+                onChange={(event) =>
+                  setNotes({ ...notes, description: event.target.value })
+                }
+              />
+            </GridItem>
+            <GridItem>
+              <Button
+                isLoading={submitLoading}
+                onClick={() => HandleSubmit()}
+                colorScheme="blue"
+              >
+                Submit
+              </Button>
+            </GridItem>
+          </Grid>
+        </Card>
+      )}
+    </LayoutComponent>
   );
 }
