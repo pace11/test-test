@@ -20,6 +20,7 @@ export default function Home() {
     <Layout>
       <main className={`${styles.main}`}>
         <Button />
+        <p>INI BARU DITAMBAH</p>
       </main>
     </Layout>
   );
